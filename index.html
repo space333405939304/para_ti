@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #2d0036 0%, #1a1a2e 60%, #000 100%);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    h1 {
+      color: #b983ff;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 2px #fff;
+      animation: aparecer 1s ease;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .botones {
+      display: flex;
+      gap: 30px;
+      position: relative;
+      z-index: 2;
+    }
+    button {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    #si {
+      background: #7f53ac;
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(127,83,172,0.25);
+    }
+    #si:hover {
+      background: #3c1053;
+      transform: scale(1.1) rotate(-2deg);
+      box-shadow: 0 4px 16px rgba(127,83,172,0.4);
+    }
+    #no {
+      background: #232323;
+      color: #fff;
+      position: absolute;
+      transition: left 0.3s, top 0.3s, background 0.3s;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    #no:hover {
+      background: #3c1053;
+    }
+    #mensaje-bonito {
+      display: none;
+      margin-top: 40px;
+      padding: 30px 40px;
+      background: rgba(44, 0, 60, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 2px 16px rgba(127,83,172,0.25);
+      color: #fff;
+      font-size: 1.3rem;
+      text-align: center;
+      max-width: 400px;
+      animation: aparecerMensaje 1s cubic-bezier(.68,-0.55,.27,1.55);
+      z-index: 3;
+      position: relative;
+    }
+    @keyframes aparecerMensaje {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    /* Corazones flotando */
+    .corazon {
+      position: fixed;
+      bottom: -40px;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: flotar 4s linear infinite;
+      z-index: 1;
+      filter: drop-shadow(0 0 6px #b983ff);
+    }
+    @keyframes flotar {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.3rem; }
+      .botones { gap: 10px; }
+      button { padding: 10px 18px; font-size: 1rem; }
+      #mensaje-bonito { padding: 18px 10px; font-size: 1rem; }
+    }
+    /* Confeti */
+    .confeti {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      opacity: 0.8;
+      z-index: 100;
+      pointer-events: none;
+      animation: caerConfeti 2.5s linear forwards;
+      border: 1.5px solid #b983ff;
+    }
+    @keyframes caerConfeti {
+      0% { transform: translateY(-30px) scale(1); }
+      100% { transform: translateY(100vh) scale(1.2) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia? <span>💖🥰</span></h1>
+  <div class="botones">
+    <button id="si">Sí 😍</button>
+  </div>
+  <button id="no">No 🙈</button>
+  <div id="mensaje-bonito">
+    <!-- El mensaje aparecerá aquí -->
+  </div>
+  <script>
+    const btnSi = document.getElementById('si');
+    const btnNo = document.getElementById('no');
+    const mensaje = document.getElementById('mensaje-bonito');
+    const botonesDiv = document.querySelector('.botones');
+
+    // Corazones flotando
+    function crearCorazon() {
+      const corazon = document.createElement('div');
+      corazon.className = 'corazon';
+      corazon.textContent = ['💖','💗','💓','💞','💕','❤️','🩷'][Math.floor(Math.random()*7)];
+      corazon.style.left = Math.random() * 100 + 'vw';
+      corazon.style.fontSize = (1.5 + Math.random()*2) + 'rem';
+      corazon.style.animationDuration = (3 + Math.random()*2) + 's';
+      document.body.appendChild(corazon);
+      setTimeout(() => corazon.remove(), 5000);
+    }
+    setInterval(crearCorazon, 700);
+
+    // Confeti
+    function lanzarConfeti() {
+      for(let i=0; i<40; i++) {
+        const confeti = document.createElement('div');
+        confeti.className = 'confeti';
+        confeti.style.left = Math.random()*100 + 'vw';
+        confeti.style.background = `hsl(${Math.random()*360},80%,70%)`;
+        confeti.style.animationDuration = (1.5 + Math.random()) + 's';
+        document.body.appendChild(confeti);
+        setTimeout(() => confeti.remove(), 3000);
+      }
+    }
+
+    btnSi.addEventListener('click', () => {
+      mensaje.innerHTML = `¡Sabía que dirías que sí, <b>mi niña</b>! 💖<br><br>Me haces la persona más feliz del mundo. Gracias por estar a mi lado, prometo hacerte sonreír cada día. Te quiero mucho 😘💕`;
+      mensaje.style.display = 'block';
+      mensaje.style.animation = 'aparecerMensaje 1s cubic-bezier(.68,-0.55,.27,1.55)';
+      lanzarConfeti();
+    });
+
+    // Función para mover el botón No a una posición aleatoria
+    function moverNoAleatorio() {
+      const btnRect = btnNo.getBoundingClientRect();
+      const maxX = window.innerWidth - btnRect.width - 20;
+      const maxY = window.innerHeight - btnRect.height - 20;
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+      btnNo.style.left = randomX + 'px';
+      btnNo.style.top = randomY + 'px';
+    }
+
+    // Al cargar la página, poner el botón No en una posición aleatoria
+    window.addEventListener('DOMContentLoaded', () => {
+      moverNoAleatorio();
+    });
+
+    // Al pasar el mouse, mover el botón No
+    btnNo.addEventListener('mouseover', moverNoAleatorio);
+  </script>
+</body>
+</html> 
